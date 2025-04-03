@@ -6,13 +6,19 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProductsComponent } from './components/products/products.component';
 import { HomeComponent } from './components/home/home.component';
+import { RegisterComponent } from './components/register/register.component';
+import { RestrictedAccessComponent } from './shared/restricted-access/restricted-access.component';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ProductsComponent,
-    HomeComponent
+    HomeComponent,
+    RegisterComponent,
+    RestrictedAccessComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
