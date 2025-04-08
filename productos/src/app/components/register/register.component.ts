@@ -1,8 +1,7 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import {  Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { Observable } from 'rxjs';
-import { bootstrapApplication } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +12,7 @@ export class RegisterComponent implements OnInit {
   public registerForm!:FormGroup;
   public estadoRegistro$!:Observable<boolean>;
   constructor(
-    private fb:NonNullableFormBuilder,
+    private fb:FormBuilder,
     private authService:AuthService
   ){}
 
