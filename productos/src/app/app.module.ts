@@ -11,6 +11,7 @@ import { RestrictedAccessComponent } from './shared/restricted-access/restricted
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ToastComponent } from './shared/toast/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     HomeComponent,
     RegisterComponent,
     RestrictedAccessComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
