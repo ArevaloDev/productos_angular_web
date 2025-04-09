@@ -60,7 +60,6 @@ describe('RegisterComponent', () => {
       email: 'juan@gmail.com',
       password: '12345678'
     });
-
     component.onSubmit();
     expect(mockAuthService.register).toHaveBeenCalledWith(component.registerForm);
   })

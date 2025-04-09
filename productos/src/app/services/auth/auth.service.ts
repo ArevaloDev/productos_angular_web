@@ -4,8 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { PostRegister, RegisterRequest } from '../../interfaces/register.interface';
 import { FormGroup} from '@angular/forms';
 import { Router } from '@angular/router';
-import {  tap } from 'rxjs';
+import {  finalize, tap } from 'rxjs';
 import { ToastService } from '../toast/toast.service';
+import { SpinnerService } from '../spinner/spinner.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,12 @@ import { ToastService } from '../toast/toast.service';
 export class AuthService {
   private api:string = environment.apiUrl;
 
+
   constructor(
     private http:HttpClient,
     private router:Router,
-    private toastService:ToastService
+    private toastService:ToastService,
+    private spinnerService:SpinnerService
   ) { }
 
   register = (formRegister:FormGroup) => {
@@ -46,6 +49,9 @@ export class AuthService {
         }, 3000)
         formRegister.reset();
       }),
+      finalize(() => {
+        this.spinnerService.showSpinner();
+      })
     )
     .subscribe();
   }

@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
 })
 export class RegisterComponent implements OnInit {
   public registerForm!:FormGroup;
-  public estadoRegistro$!:Observable<boolean>;
   constructor(
     private fb:FormBuilder,
     private authService:AuthService

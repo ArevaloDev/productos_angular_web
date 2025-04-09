@@ -12,6 +12,7 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastComponent } from './shared/toast/toast/toast.component';
+import { SpinnerComponent } from './shared/spinner/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ToastComponent } from './shared/toast/toast/toast.component';
     RegisterComponent,
     RestrictedAccessComponent,
     NotFoundComponent,
-    ToastComponent
+    ToastComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
