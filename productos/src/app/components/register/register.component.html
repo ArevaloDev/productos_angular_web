@@ -16,13 +16,13 @@
           <small
             *ngIf="formControls['name'].hasError('required')"
             class="text-danger"
-            >El nombre es obligatorio.</small
+            >Name is required.</small
           >
           <br />
           <small
             *ngIf="formControls['name'].hasError('minlength')"
             class="text-danger"
-            >El nombre debe tener al menos 3 caracteres.</small
+            >Name must be at least 3 characters long.</small
           >
         </div>
       </div>
@@ -46,13 +46,13 @@
           <small
             *ngIf="formControls['email'].hasError('required')"
             class="text-danger"
-            >El email es obligatorio.</small
+            >Email is required.</small
           >
           <br />
           <small
             *ngIf="formControls['email'].hasError('email')"
             class="text-danger"
-            >Por favor ingrese un email valido.</small
+            >Please enter a valid email.</small
           >
         </div>
       </div>
@@ -73,21 +73,19 @@
           <small
             *ngIf="formControls['password'].hasError('required')"
             class="text-danger"
-            >La contraseña es obligatorio.</small
+            >Password is required.</small
           >
           <br />
           <small
             *ngIf="formControls['password'].hasError('minlength')"
             class="text-danger"
-            >La contraseña debe tener al menos 8 caracteres</small
+            >Password must be at least 8 characters long</small
           >
         </div>
       </div>
-      <button type="submit" class="btn btn-primary w-100">Submit</button>
+      <button type="submit" class="btn btn-primary w-100">Register</button>
     </form>
   </div>
 </div>
 <app-toast></app-toast>
-<div class="d-flex justify-content-center mt-3">
   <app-spinner></app-spinner>
-</div>

@@ -1,19 +1,41 @@
 <div class="mt-5 ">
     <h3 class="text-center ">LOGIN</h3>
     <div class="d-flex justify-content-center mt-5">
-      <form>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <input formControlName='email' type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
           <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          <div *ngIf="formControls['email'].invalid && formControls['email'].touched">
+          <small
+          *ngIf="formControls['email'].hasError('required')"
+            class="text-danger"
+            >Email is required.</small
+          >
+          <br />
+          <small
+            *ngIf="formControls['email'].hasError('email')"
+            class="text-danger"
+            >Please enter a valid email.</small
+          >
+        </div>
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1">
+          <input formControlName="password" type="password" class="form-control" id="exampleInputPassword1">
+          <div *ngIf="formControls['password'].invalid && formControls['password'].touched">
+            <small
+            *ngIf="formControls['password'].hasError('required')"
+              class="text-danger"
+              >Password is required.</small
+            >
+            <br/>
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Submit</button>
+        <button type="submit" class="btn btn-primary w-100">Login</button>
         <p class="text-center mt-2"><a [routerLink]="['/register']">¿No tienes una cuenta?</a></p>
       </form>
     </div>
 </div>
 <app-toast></app-toast>
+<app-spinner></app-spinner>

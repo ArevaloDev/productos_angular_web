@@ -1,7 +1,10 @@
 import {  Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
-import { Observable } from 'rxjs';
+import {firstValueFrom} from 'rxjs';
+import { ToastService } from '../../services/toast/toast.service';
+import { Router } from '@angular/router';
+import { SpinnerService } from '../../services/spinner/spinner.service';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +15,10 @@ export class RegisterComponent implements OnInit {
   public registerForm!:FormGroup;
   constructor(
     private fb:FormBuilder,
-    private authService:AuthService
+    private authService:AuthService,
+    private toastService:ToastService,
+    private router:Router,
+    private spinnerService:SpinnerService
   ){}
 
   ngOnInit(): void {
@@ -31,8 +37,36 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.controls;
   }
 
-  onSubmit = () => {
-    this.authService.register(this.registerForm);
-  }
+  onSubmit = async() => {
+    if(this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      return;
+    }
+    this.spinnerService.showSpinner();
+    try {
+      const response = await firstValueFrom(
+        this.authService.register(this.registerForm.value)
+      );
+
+      if(response.estado === 'repetido'){
+        this.toastService.show('Usuario ya se encuentra registrado', 'danger', 5000);
+        this.registerForm.reset();
+        return;
+      }
+      this.toastService.show('Usuario registrado con éxito', 'success', 5000);
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      }, 2000)
+    } catch (error) {
+      this.toastService.show('Error al registrarse', 'danger', 5000);
+      this.spinnerService.hideSpinner();
+    } finally{
+      this.spinnerService.hideSpinner();
+    }
+
 
 }
+
+}
+
+

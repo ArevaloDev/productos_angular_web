@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { PostRegister, RegisterRequest } from '../../interfaces/register.interface';
-import { FormGroup} from '@angular/forms';
-import { Router } from '@angular/router';
-import {  finalize, tap } from 'rxjs';
-import { ToastService } from '../toast/toast.service';
-import { SpinnerService } from '../spinner/spinner.service';
+import { LoginRequest, LoginResponse, PostLogin } from '../../interfaces/login.interface';
+import { catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,44 +13,45 @@ export class AuthService {
 
 
   constructor(
-    private http:HttpClient,
-    private router:Router,
-    private toastService:ToastService,
-    private spinnerService:SpinnerService
+    private http:HttpClient
   ) { }
 
-  register = (formRegister:FormGroup) => {
-    if(formRegister.invalid){
-      formRegister.markAllAsTouched();
-      return;
-    }
+  register = (formRegister:RegisterRequest) => {
+    const {name, email, password} = formRegister;
     const register:PostRegister = {
-      nombre: formRegister.get('name')?.value,
-      correo: formRegister.get('email')?.value,
-      password: formRegister.get('password')?.value
+      nombre: name,
+      correo: email,
+      password: password
     }
-    this.RegisterPost(register, formRegister)
+    console.log(register);
+    return this.http.post<RegisterRequest>(`${this.api}/registro`, register).pipe(
+      catchError((error:HttpErrorResponse) => this.handleError(error))
+    )
   }
 
-  RegisterPost = (register:PostRegister, formRegister:FormGroup) => {
-    return this.http.post<RegisterRequest>(`${this.api}/registro`, register).pipe(
-      tap(response => {
-        if(response.estado === 'repetido'){
-          this.toastService.show('Usuario ya se encuentra registrado', 'danger', 5000);
-          formRegister.reset();
-          return;
-        }
-        this.toastService.show('Usuario registrado con exito', 'success', 5000);
-        setTimeout(() => {
-          this.router.navigate(['/login']);
-        }, 3000)
-        formRegister.reset();
-      }),
-      finalize(() => {
-        this.spinnerService.showSpinner();
-      })
+
+
+  login = (loginForm:LoginRequest) => {
+    const {email, password} = loginForm;
+    const login:PostLogin = {
+      correo: email,
+      password: password
+    }
+    return this.http.post<LoginResponse>(`${this.api}/login`, login).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return this.handleError(error)
+      } )
     )
-    .subscribe();
+  }
+
+  private handleError(error:HttpErrorResponse){
+    let messageError = 'Ocurrió un error inesperado';
+    if(error.status === 404){
+      messageError = 'El recurso no fue encontrado (404)';
+    }else if(error.status === 500 ){
+      messageError = 'Error en el servidor (500)';
+    }
+    return throwError(() => new Error(messageError))
   }
 
 
