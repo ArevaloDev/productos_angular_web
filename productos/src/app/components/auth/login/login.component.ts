@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { Router } from '@angular/router';
-import { SpinnerService } from '../../services/spinner/spinner.service';
-import { ToastService } from '../../services/toast/toast.service';
-import { catchError, finalize, firstValueFrom, of, tap } from 'rxjs';
+import { SpinnerService } from '../../../services/spinner/spinner.service';
+import { ToastService } from '../../../services/toast/toast.service';
+import { firstValueFrom} from 'rxjs';
+import { TokenServicesService } from '../../../services/tokenServices/token-services.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
     private authService:AuthService,
     private router:Router,
     private spinnerService:SpinnerService,
-    private toastService:ToastService
+    private toastService:ToastService,
+    private tokenService:TokenServicesService
 
   ){}
 
@@ -47,14 +49,13 @@ export class LoginComponent implements OnInit {
       const response = await firstValueFrom(
         this.authService.login(this.loginForm.value)
       )
+      this.tokenService.setToken(response.token)
       if(response.estado !== 'ok') {
         this.toastService.show('Credenciales incorrectas', 'danger', 5000);
         return;
       }
       this.router.navigate(['/home']);
     } catch (error:any) {
-      console.log('errrooor', error);
-
       if(error.message === 'El recurso no fue encontrado (404)'){
         this.toastService.show('Error al iniciar sesión, credenciales invalidas', 'danger', 5000);
         return

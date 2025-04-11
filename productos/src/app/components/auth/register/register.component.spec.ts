@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegisterComponent } from './register.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ToastComponent } from '../../shared/toast/toast/toast.component';
+import { ToastComponent } from '../../../shared/toast/toast/toast.component';
 import { FormBuilder, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
