@@ -54,5 +54,15 @@ export class AuthService {
     return throwError(() => new Error(messageError))
   }
 
+  setLocalUser = (user:any) => {
+    localStorage.setItem('user', JSON.stringify(user))
+  }
+
+  getLocalUser = () => {
+    const data = localStorage.getItem('user')!;
+    const user = JSON.parse(data);
+    return user;
+  }
+
 
 }

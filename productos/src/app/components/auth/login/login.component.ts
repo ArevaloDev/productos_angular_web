@@ -54,6 +54,7 @@ export class LoginComponent implements OnInit {
         this.toastService.show('Credenciales incorrectas', 'danger', 5000);
         return;
       }
+      this.authService.setLocalUser(response);
       this.router.navigate(['/home']);
     } catch (error:any) {
       if(error.message === 'El recurso no fue encontrado (404)'){
