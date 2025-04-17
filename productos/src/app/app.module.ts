@@ -9,11 +9,12 @@ import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { RestrictedAccessComponent } from './shared/restricted-access/restricted-access.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastComponent } from './shared/toast/toast/toast.component';
 import { SpinnerComponent } from './shared/spinner/spinner/spinner.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import { authInterceptor } from './services/intercept/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,9 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [provideHttpClient(
+    withInterceptors([authInterceptor])
+  )],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

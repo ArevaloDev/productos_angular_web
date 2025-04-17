@@ -1,1 +1,19 @@
-<p>products works!</p>
+
+<div class="container mt-5">
+  <table class="table  table-bordered">
+    <thead class="text-center table-danger">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">slug</th>
+      </tr>
+    </thead>
+    <tbody class="text-center">
+      <tr *ngFor="let product of product$ | async">
+        <th scope="row">{{product.id}}</th>
+        <td>{{product.nombre}}</td>
+        <td>{{product.slug}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
