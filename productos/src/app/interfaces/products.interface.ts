@@ -3,3 +3,8 @@ export interface Products{
   nombre:string;
   slug:string;
 }
+
+export interface CategoryResponse{
+  estado:string;
+  mensaje:string
+}
